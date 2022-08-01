@@ -30,13 +30,16 @@ nameFormButton.addEventListener('click', () => {
     teamTwoLabel.textContent = teamTwoName;
   // reset the form values
     teamOneLabel.textContent = teamOneName;
-    teamTwoLabel.textContent = teamTwoName;
-
+  teamTwoLabel.textContent = teamTwoName;
+  
+    name1 = teamOneInput.value;
+    name2 = teamTwoInput.value;
+  const thisGame = renderGame(name1, name2, score1, score2);
+  currentGameEl.append(thisGame);
     teamOneInput.value = '';
     teamTwoInput.value = '';
 
   // refresh the current game element with new data by calling the appropriate function
-    renderGame(name1, name2, score1, score2);
 });
 
 
@@ -45,37 +48,33 @@ nameFormButton.addEventListener('click', () => {
 
 teamOneAddButton.addEventListener('click', () => {
 
-  currentGameEl.textContent = '';
-  score1++;
-  const team1Div = renderGame(name1, name2, score1, score2);
-  currentGameEl.append(team1Div);
+    currentGameEl.textContent = '';
+    score1++;
+    const theGame = renderGame(name1, name2, score1, score2);
+    currentGameEl.append(theGame);
 
 });
 
 teamTwoAddButton.addEventListener('click', () => {
- currentGameEl.textContent = '';
- score2++;
- const team2Div = renderGame(name1, name2, score1, score2);
- currentGameEl.append(team2Div);
+    currentGameEl.textContent = '';
+    score2++;
+    const theGame = renderGame(name1, name2, score1, score2);
+    currentGameEl.append(theGame);
 });
-
-
-
-
 
 
 teamOneSubtractButton.addEventListener('click', () => {
-  currentGameEl.textContent = '';
-  score1--;
-  const team1Div = renderGame(name1, name2, score1, score2);
-  currentGameEl.append(team1Div);
+    currentGameEl.textContent = '';
+    score1--;
+    const team1Div = renderGame(name1, name2, score1, score2);
+    currentGameEl.append(team1Div);
 });
 
 teamTwoSubtractButton.addEventListener('click', () => {
- currentGameEl.textContent = '';
- score2--;
- const team2Div = renderGame(name1, name2, score1, score2);
- currentGameEl.append(team2Div);
+    currentGameEl.textContent = '';
+    score2--;
+    const team2Div = renderGame(name1, name2, score1, score2);
+    currentGameEl.append(team2Div);
 });
 
 
@@ -85,13 +84,25 @@ finishGameButton.addEventListener('click', () => {
   // add the current game to an array of games in state
   // it will be helpful to keep track of these games as objects with 4 properties, one for each piece of state we're tracking
   // for example, make an object like this: { name1: 'ducks', name2: 'bears' ,score1: 1, score2: 2 }
+    const currentGameData = {
+        name1: name1,
+        name2: name2,
+        score1: score1,
+        score2: score2,
+    };
   // then push it to your array in state
   // (be sure to make a new object. do not declare the object in global scope and mutate it for reuse. This would cause difficult bugs)
+    pastGames.push(currentGameData);
+    pastGamesEl.textContent = '';
+
+    for (let game of pastGames) {
+        const gameEl = renderGame(game.name1, game.name2, game.score1, game.score2);
+        pastGamesEl.append(gameEl);
+    }
 
     displayAllGames();
 
   // reset the state to zero and empty strings
-
   // refresh the current game element with new data by calling the appropriate function
 });
 
